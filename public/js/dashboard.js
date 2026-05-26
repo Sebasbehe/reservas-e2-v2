@@ -39,13 +39,22 @@ const userName =
 const userRole =
     localStorage.getItem(
         "userRole"
-    ) || "user";
+    ) || "Usuario";
 
 document.getElementById(
-    "userName"
+    "sidebarUserRole"
 ).innerText =
-    userName;
+    userRole;
 
+document.getElementById(
+    "topbarUserRole"
+).innerText =
+    userRole;
+
+document.getElementById(
+    "settingsUserRole"
+).innerText =
+    userRole;
 /* AVATAR */
 
 const initials =
