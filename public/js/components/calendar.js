@@ -456,9 +456,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     "info",
                     reservation.extendedProps.room,
 
-                    `👤 ${reservation.extendedProps.userName}
-🕒 ${reservation.extendedProps.horaInicio} - ${reservation.extendedProps.horaFin}
-📝 ${reservation.extendedProps.motivo || "Sin motivo"}`
+                    ` ${reservation.extendedProps.userName}
+ ${reservation.extendedProps.horaInicio} - ${reservation.extendedProps.horaFin}
+  ${reservation.extendedProps.motivo || "Sin motivo"}`
                 );
 
                 return;
