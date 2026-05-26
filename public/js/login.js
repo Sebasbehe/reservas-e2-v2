@@ -142,3 +142,20 @@ registerForm.addEventListener("submit", async (e) => {
   }
 
 });
+const goLogin =
+    document.getElementById(
+        "goLogin"
+    );
+
+if (goLogin) {
+
+    goLogin.addEventListener(
+        "click",
+        (e) => {
+
+            e.preventDefault();
+
+            loginTab.click();
+        }
+    );
+}
