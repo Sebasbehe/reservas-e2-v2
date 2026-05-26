@@ -28,6 +28,7 @@
     }
 
 })();
+
 /* =========================
    USER INFO
 ========================= */
@@ -35,28 +36,61 @@
 const userName =
     localStorage.getItem(
         "userName"
-    );
+    ) || "Usuario";
 
 const userRole =
     localStorage.getItem(
         "userRole"
     ) || "Usuario";
 
+/* ROL FORMATEADO */
+
+const roleText =
+    userRole === "admin"
+        ? "Administrador"
+        : "Usuario";
+
+/* =========================
+   NOMBRES
+========================= */
+
+document.getElementById(
+    "topbarUserName"
+).innerText =
+    userName;
+
+document.getElementById(
+    "sidebarUserName"
+).innerText =
+    userName;
+
+document.getElementById(
+    "settingsUserName"
+).innerText =
+    userName;
+
+/* =========================
+   ROLES
+========================= */
+
 document.getElementById(
     "sidebarUserRole"
 ).innerText =
-    userRole;
+    roleText;
 
 document.getElementById(
     "topbarUserRole"
 ).innerText =
-    userRole;
+    roleText;
 
 document.getElementById(
     "settingsUserRole"
 ).innerText =
-    userRole;
-/* AVATAR */
+    roleText;
+
+/* =========================
+   AVATAR
+========================= */
 
 const initials =
     userName
@@ -70,6 +104,21 @@ document.getElementById(
     "userAvatar"
 ).innerText =
     initials;
+
+document.getElementById(
+    "sidebarAvatar"
+).innerText =
+    initials;
+
+document.getElementById(
+    "settingsAvatar"
+).innerText =
+    initials;
+
+/* =========================
+   DASHBOARD BTN
+========================= */
+
 document.getElementById(
     "dashboardMenu"
 ).addEventListener("click", (e) => {
@@ -81,44 +130,9 @@ document.getElementById(
     calendar.refetchEvents();
 });
 
-/* SIDEBAR */
-
-document.getElementById(
-    "sidebarUserName"
-).innerText =
-    userName;
-document.getElementById(
-    "settingsUserName"
-).innerText =
-    userName;
-
-document.getElementById(
-    "sidebarUserRole"
-).innerText =
-    userRole;
-
-document.getElementById(
-    "topbarUserRole"
-).innerText =
-    userRole;
-
-document.getElementById(
-    "settingsUserRole"
-).innerText =
-    userRole;
-document.getElementById(
-    "sidebarUserRole"
-).innerText =
-    userRole === "admin"
-        ? "Administrador"
-        : "Usuario";
-
-document.getElementById(
-    "sidebarAvatar"
-).innerText =
-    initials;
-
-/* WELCOME */
+/* =========================
+   WELCOME MESSAGE
+========================= */
 
 const currentHour =
     new Date().getHours();
@@ -151,7 +165,7 @@ document.getElementById(
     `${greeting}, ${userName}`;
 
 /* =========================
-   BLOQUEAR BACK CACHE
+   BLOQUEAR CACHE BACK
 ========================= */
 
 window.addEventListener(
