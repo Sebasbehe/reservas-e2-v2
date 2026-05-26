@@ -201,7 +201,12 @@ app.post("/login", (req, res) => {
       req.session.userId = row.id;
       req.session.userName = row.name;
       // Enviar el userId al frontend para guardarlo en localStorage
-      res.json({ success: true, userId: row.id });
+      res.json({
+        success: true,
+        userId: row.id,
+        userName: row.name,
+        role: row.role
+      });
     })
     .catch(err => res.status(500).send(err.message));
 });
@@ -308,17 +313,17 @@ app.post("/api/reservations", requireLogin, (req, res) => {
   }
   const duracionHoras =
     endDateTime.diff(
-        startDateTime,
-        "hours",
-        true
+      startDateTime,
+      "hours",
+      true
     );
 
-if (duracionHoras > 4) {
+  if (duracionHoras > 4) {
 
     return res.status(400).send(
-        "La reserva no puede superar 4 horas."
+      "La reserva no puede superar 4 horas."
     );
-}
+  }
 
   // 🔹 Verificar choque de horarios
   pool.query(
@@ -368,17 +373,17 @@ app.put("/api/reservations/:id", requireLogin, (req, res) => {
   }
   const duracionHoras =
     endDateTime.diff(
-        startDateTime,
-        "hours",
-        true
+      startDateTime,
+      "hours",
+      true
     );
 
-if (duracionHoras > 4) {
+  if (duracionHoras > 4) {
 
     return res.status(400).send(
-        "La reserva no puede superar 4 horas."
+      "La reserva no puede superar 4 horas."
     );
-}
+  }
 
   // 🔹 Validar solapamientos (excluyendo la misma reserva que se edita)
   pool.query(
@@ -410,10 +415,53 @@ if (duracionHoras > 4) {
 
 });
 
-app.delete("/api/reservations/:id", requireLogin, (req, res) => {
-  pool.query("DELETE FROM reservations WHERE id = $1 AND user_id = $2", [req.params.id, req.session.userId])
-    .then(() => res.send("Reserva eliminada"))
-    .catch(err => res.status(500).send(err.message));
+app.delete(
+  "/api/reservations/:id",
+  requireLogin,
+  async (req, res) => {
+
+    try {
+
+      // 🔹 ADMIN
+      if (
+        req.session.role ===
+        "admin"
+      ) {
+
+        await pool.query(
+
+          "DELETE FROM reservations WHERE id = $1",
+
+          [req.params.id]
+        );
+
+      } else {
+
+        // 🔹 USUARIO NORMAL
+        await pool.query(
+
+          `DELETE FROM reservations
+           WHERE id = $1
+           AND user_id = $2`,
+
+          [
+            req.params.id,
+            req.session.userId
+          ]
+        );
+      }
+
+      res.send(
+        "Reserva eliminada"
+      );
+
+    } catch (err) {
+
+      console.error(err);
+
+      res.status(500)
+        .send(err.message);
+    }
 });
 process.on("uncaughtException", err => {
 

@@ -36,6 +36,10 @@ const userName =
     localStorage.getItem(
         "userName"
     ) || "Usuario Demo";
+const userRole =
+    localStorage.getItem(
+        "userRole"
+    ) || "user";
 
 document.getElementById(
     "userName"
@@ -73,6 +77,12 @@ document.getElementById(
     "sidebarUserName"
 ).innerText =
     userName;
+document.getElementById(
+    "sidebarUserRole"
+).innerText =
+    userRole === "admin"
+        ? "Administrador"
+        : "Usuario";
 
 document.getElementById(
     "sidebarAvatar"

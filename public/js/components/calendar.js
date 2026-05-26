@@ -409,15 +409,18 @@ document.addEventListener("DOMContentLoaded", function () {
             const currentUserId =
                 localStorage.getItem("userId");
 
+            const currentRole =
+                localStorage.getItem("userRole");
             // 🔹 Dueño de la reserva
             const ownerId =
                 reservation.extendedProps.userId;
 
             // 🔹 Bloquear si no es dueño
             if (
-                String(currentUserId)
-                !==
+                String(currentUserId) !==
                 String(ownerId)
+                &&
+                currentRole !== "admin"
             ) {
 
                 showToast(
@@ -489,47 +492,47 @@ document.addEventListener("DOMContentLoaded", function () {
    FILTRO SALAS
 ========================= */
 
-const roomFilter =
-    document.getElementById(
-        "roomFilter"
-    );
+    const roomFilter =
+        document.getElementById(
+            "roomFilter"
+        );
 
-if (roomFilter) {
+    if (roomFilter) {
 
-    roomFilter.addEventListener(
-        "change",
-        () => {
+        roomFilter.addEventListener(
+            "change",
+            () => {
 
-            currentRoomFilter =
-                roomFilter.value;
+                currentRoomFilter =
+                    roomFilter.value;
 
-            calendar.refetchEvents();
+                calendar.refetchEvents();
 
-        }
-    );
-}
-/* =========================
-   CAMBIO DE VISTA
-========================= */
+            }
+        );
+    }
+    /* =========================
+       CAMBIO DE VISTA
+    ========================= */
 
-const calendarView =
-    document.getElementById(
-        "calendarView"
-    );
+    const calendarView =
+        document.getElementById(
+            "calendarView"
+        );
 
-if (calendarView) {
+    if (calendarView) {
 
-    calendarView.addEventListener(
-        "change",
-        () => {
+        calendarView.addEventListener(
+            "change",
+            () => {
 
-            calendar.changeView(
-                calendarView.value
-            );
+                calendar.changeView(
+                    calendarView.value
+                );
 
-        }
-    );
-}
+            }
+        );
+    }
 
 
     /* =========================

@@ -61,17 +61,29 @@ loginForm.addEventListener("submit", async (e) => {
 
     if (result.success) {
 
-      localStorage.setItem("userId", result.userId);
       localStorage.setItem(
-        "userName",
-        data.email.split("@")[0]
+        "userId",
+        result.userId
       );
 
-      window.location.href = "/pages/index.html";
+      localStorage.setItem(
+        "userName",
+        result.userName
+      );
+
+      localStorage.setItem(
+        "userRole",
+        result.role
+      );
+
+      window.location.href =
+        "/pages/index.html";
 
     } else {
 
-      alert("Credenciales incorrectas");
+      alert(
+        "Credenciales incorrectas"
+      );
     }
 
   } catch (err) {
