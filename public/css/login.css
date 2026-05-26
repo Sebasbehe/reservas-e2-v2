@@ -450,7 +450,7 @@ body{
     margin-right: 12px;
 }
 
-.input-box input{
+.input-box input {
 
     width: 100%;
 
@@ -458,11 +458,39 @@ body{
 
     outline: none;
 
-    background: transparent;
+    background: transparent !important;
 
-    color: #efefef;
+    color: white;
 
     font-size: 0.95rem;
+
+    font-family: 'Inter', sans-serif;
+
+    box-shadow: none !important;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    -moz-appearance: none;
+}
+/* AUTOFILL CHROME */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+
+    -webkit-box-shadow:
+        0 0 0 1000px transparent inset !important;
+
+    -webkit-text-fill-color:
+        white !important;
+
+    transition:
+        background-color 9999s ease-in-out 0s;
+
+    caret-color: white;
 }
 
 .input-box input::placeholder{
