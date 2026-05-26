@@ -1,4 +1,9 @@
-/* public/css/login.css */
+/* =========================================
+   LOGIN.CSS — PALETA E2 ENERGÍA
+   #efefef
+   #c2d500
+   #204339
+========================================= */
 
 *{
 
@@ -12,11 +17,11 @@ body{
 
     font-family: 'Inter', sans-serif;
 
-    background: #08110d;
+    background: #204339;
 
     min-height: 100vh;
 
-    color: white;
+    color: #efefef;
 
     position: relative;
 
@@ -25,7 +30,9 @@ body{
     overflow-y: auto;
 }
 
-/* GLOWS */
+/* =========================================
+   GLOWS
+========================================= */
 
 .background-glow{
 
@@ -35,15 +42,15 @@ body{
 
     filter: blur(120px);
 
-    opacity: 0.3;
+    opacity: 0.28;
 }
 
 .glow-1{
 
-    width: 400px;
-    height: 400px;
+    width: 420px;
+    height: 420px;
 
-    background: #6b8e23;
+    background: #c2d500;
 
     top: -120px;
     left: -120px;
@@ -51,16 +58,18 @@ body{
 
 .glow-2{
 
-    width: 500px;
-    height: 500px;
+    width: 520px;
+    height: 520px;
 
-    background: #2d6a4f;
+    background: #163029;
 
-    bottom: -200px;
-    right: -100px;
+    bottom: -220px;
+    right: -120px;
 }
 
-/* LAYOUT */
+/* =========================================
+   LAYOUT
+========================================= */
 
 .login-wrapper{
 
@@ -75,7 +84,9 @@ body{
     grid-template-columns: 1.2fr 0.9fr;
 }
 
-/* BRAND PANEL */
+/* =========================================
+   BRAND PANEL
+========================================= */
 
 .brand-panel{
 
@@ -94,25 +105,46 @@ body{
 
     align-items: center;
 
-    gap: 18px;
+    gap: 22px;
 }
 
 .logo-box{
 
-    width: 70px;
-    height: 70px;
+    width: 110px;
+    height: 110px;
 
-    border-radius: 22px;
+    border-radius: 28px;
 
-    background: linear-gradient(135deg,#6b8e23,#95c11f);
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 1.8rem;
+    overflow: hidden;
 
-    box-shadow: 0 10px 30px rgba(107,142,35,0.35);
+    padding: 14px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25),
+        0 0 25px rgba(194,213,0,.18);
+}
+
+.company-logo{
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        drop-shadow(0 4px 10px rgba(0,0,0,.15));
 }
 
 .brand-top h1{
@@ -120,11 +152,13 @@ body{
     font-size: 2rem;
 
     font-weight: 700;
+
+    color: #efefef;
 }
 
 .brand-top p{
 
-    color: rgba(255,255,255,0.65);
+    color: rgba(239,239,239,0.68);
 
     margin-top: 6px;
 }
@@ -151,6 +185,8 @@ body{
     margin-bottom: 32px;
 
     backdrop-filter: blur(12px);
+
+    color: #efefef;
 }
 
 .brand-content h2{
@@ -162,11 +198,13 @@ body{
     margin-bottom: 28px;
 
     font-weight: 800;
+
+    color: #efefef;
 }
 
 .brand-content p{
 
-    color: rgba(255,255,255,0.72);
+    color: rgba(239,239,239,0.74);
 
     line-height: 1.8;
 
@@ -175,7 +213,9 @@ body{
     margin-bottom: 42px;
 }
 
-/* FEATURES */
+/* =========================================
+   FEATURES
+========================================= */
 
 .feature-list{
 
@@ -196,7 +236,7 @@ body{
 
     font-size: 1rem;
 
-    color: rgba(255,255,255,0.92);
+    color: rgba(239,239,239,0.95);
 }
 
 .feature-item i{
@@ -212,12 +252,17 @@ body{
     align-items: center;
     justify-content: center;
 
-    color: #95c11f;
+    color: #c2d500;
 
     font-size: 1.1rem;
+
+    box-shadow:
+        0 0 15px rgba(194,213,0,.18);
 }
 
-/* AUTH PANEL */
+/* =========================================
+   AUTH PANEL
+========================================= */
 
 .auth-panel{
 
@@ -236,20 +281,23 @@ body{
 
     max-width: 500px;
 
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.06);
 
     border: 1px solid rgba(255,255,255,0.08);
 
-    backdrop-filter: blur(22px);
+    backdrop-filter: blur(24px);
 
     border-radius: 32px;
 
     padding: 40px;
 
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.35);
 }
 
-/* TABS */
+/* =========================================
+   TABS
+========================================= */
 
 .tabs{
 
@@ -272,7 +320,7 @@ body{
 
     background: transparent;
 
-    color: rgba(255,255,255,0.65);
+    color: rgba(239,239,239,0.65);
 
     height: 52px;
 
@@ -289,14 +337,21 @@ body{
 
 .tab-btn.active{
 
-    background: linear-gradient(135deg,#6b8e23,#95c11f);
+    background: linear-gradient(
+        135deg,
+        #c2d500,
+        #9eb100
+    );
 
-    color: white;
+    color: #204339;
 
-    box-shadow: 0 10px 20px rgba(107,142,35,0.25);
+    box-shadow:
+        0 10px 20px rgba(194,213,0,.28);
 }
 
-/* FORMS */
+/* =========================================
+   FORMS
+========================================= */
 
 .auth-form{
 
@@ -330,16 +385,20 @@ body{
     font-size: 2rem;
 
     margin-bottom: 10px;
+
+    color: #efefef;
 }
 
 .form-subtitle{
 
-    color: rgba(255,255,255,0.62);
+    color: rgba(239,239,239,0.62);
 
     margin-bottom: 34px;
 }
 
-/* INPUTS */
+/* =========================================
+   INPUTS
+========================================= */
 
 .input-group{
 
@@ -354,7 +413,7 @@ body{
 
     font-size: 0.92rem;
 
-    color: rgba(255,255,255,0.85);
+    color: rgba(239,239,239,0.88);
 }
 
 .input-box{
@@ -378,14 +437,15 @@ body{
 
 .input-box:focus-within{
 
-    border-color: #95c11f;
+    border-color: #c2d500;
 
-    box-shadow: 0 0 0 4px rgba(149,193,31,0.12);
+    box-shadow:
+        0 0 0 4px rgba(194,213,0,.12);
 }
 
 .input-box i{
 
-    color: rgba(255,255,255,0.45);
+    color: rgba(239,239,239,0.45);
 
     margin-right: 12px;
 }
@@ -400,17 +460,19 @@ body{
 
     background: transparent;
 
-    color: white;
+    color: #efefef;
 
     font-size: 0.95rem;
 }
 
 .input-box input::placeholder{
 
-    color: rgba(255,255,255,0.35);
+    color: rgba(239,239,239,0.35);
 }
 
-/* BUTTON */
+/* =========================================
+   BUTTON
+========================================= */
 
 .main-btn{
 
@@ -422,13 +484,17 @@ body{
 
     border-radius: 18px;
 
-    background: linear-gradient(135deg,#6b8e23,#95c11f);
+    background: linear-gradient(
+        135deg,
+        #c2d500,
+        #9eb100
+    );
 
-    color: white;
+    color: #204339;
 
     font-size: 1rem;
 
-    font-weight: 700;
+    font-weight: 800;
 
     cursor: pointer;
 
@@ -441,10 +507,13 @@ body{
 
     transform: translateY(-2px);
 
-    box-shadow: 0 14px 30px rgba(107,142,35,0.35);
+    box-shadow:
+        0 14px 30px rgba(194,213,0,.35);
 }
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media(max-width: 1200px){
 
@@ -480,32 +549,4 @@ body{
 
         font-size: 1.7rem;
     }
-}
-.logo-box {
-
-    width: 90px;
-    height: 90px;
-
-    border-radius: 24px;
-
-    background: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    padding: 10px;
-
-    box-shadow: 0 10px 25px rgba(0,0,0,.15);
-}
-.company-logo {
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    display: block;
 }
