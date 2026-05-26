@@ -74,7 +74,7 @@ loginForm.addEventListener("submit", async (e) => {
 
       localStorage.setItem(
         "userRole",
-        result.role
+        result.userRole
       );
       loginForm.reset();
 
@@ -104,10 +104,10 @@ registerForm.addEventListener("submit", async (e) => {
   const formData = new FormData(registerForm);
   function clearForms() {
 
-  loginForm.reset();
+    loginForm.reset();
 
-  registerForm.reset();
-}
+    registerForm.reset();
+  }
 
   const data = Object.fromEntries(formData);
 

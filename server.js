@@ -202,10 +202,15 @@ app.post("/login", (req, res) => {
       req.session.userName = row.name;
       // Enviar el userId al frontend para guardarlo en localStorage
       res.json({
+
         success: true,
+
         userId: row.id,
+
         userName: row.name,
-        role: row.role
+
+        userRole: row.role
+
       });
     })
     .catch(err => res.status(500).send(err.message));
@@ -462,7 +467,7 @@ app.delete(
       res.status(500)
         .send(err.message);
     }
-});
+  });
 process.on("uncaughtException", err => {
 
   console.error(
