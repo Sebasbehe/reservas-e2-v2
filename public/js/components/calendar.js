@@ -1,8 +1,12 @@
 let calendar;
+
 window.currentEndpoint =
     "/api/reservations";
+
 let editingReservationId = null;
+
 let currentView = "all";
+
 let currentRoomFilter = "all";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -15,6 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const reservationModal =
         document.getElementById("reservationModal");
+
+    const reservationForm =
+        document.getElementById("reservationForm");
+
+    const deleteReservationBtn =
+        document.getElementById("deleteReservation");
 
     /* =========================
        CALENDARIO
@@ -33,8 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
         dayMaxEvents: true,
 
         eventTimeFormat: {
+
             hour: "2-digit",
+
             minute: "2-digit",
+
             hour12: false
         },
 
@@ -60,10 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const data =
                     await res.json();
 
-                console.log("RESERVAS:", data);
-
                 const ahora =
                     new Date();
+
                 const events =
                     data
                         .filter(r => {
@@ -75,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         .split("T")[0]}T${r.end_time}`
                                 );
 
-                            // 🔹 FILTRO POR SALA
+                            // FILTRO SALA
                             if (
                                 currentRoomFilter !== "all" &&
                                 r.room !== currentRoomFilter
@@ -84,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 return false;
                             }
 
-                            // 🔹 MIS RESERVAS
+                            // MIS RESERVAS
                             if (
                                 endpoint ===
                                 "/api/myreservations"
@@ -93,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 return fechaFin >= ahora;
                             }
 
-                            // 🔹 HISTORIAL
+                            // HISTORIAL
                             if (
                                 endpoint ===
                                 "/api/history"
@@ -102,19 +114,23 @@ document.addEventListener("DOMContentLoaded", function () {
                                 return fechaFin < ahora;
                             }
 
-                            // 🔹 DASHBOARD
+                            // DASHBOARD
                             return fechaFin >= ahora;
+
                         })
+
                         .map(r => {
 
                             let color =
                                 "#3a87ad";
+
                             if (
                                 endpoint ===
                                 "/api/history"
                             ) {
 
-                                color = "#64748b";
+                                color =
+                                    "#64748b";
                             }
 
                             if (
@@ -196,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
 
                 successCallback(events);
+
                 const skeleton =
                     document.getElementById(
                         "calendarSkeleton"
@@ -225,6 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 failureCallback(err);
             }
         },
+
         /* =========================
            PERSONALIZAR EVENTOS
         ========================= */
@@ -279,31 +297,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     tooltip.innerHTML = `
 
-                    <b>
+                    <div class="tooltip-title">
                         ${info.event.extendedProps.room}
-                    </b>
+                    </div>
 
-                    <br>
+                    <div class="tooltip-item">
+                        <b>Usuario:</b>
+                        ${info.event.extendedProps.userName}
+                    </div>
 
-                    <b>Usuario:</b>
-                    ${info.event.extendedProps.userName}
+                    <div class="tooltip-item">
+                        <b>Inicio:</b>
+                        ${info.event.extendedProps.horaInicio}
+                    </div>
 
-                    <br>
+                    <div class="tooltip-item">
+                        <b>Fin:</b>
+                        ${info.event.extendedProps.horaFin}
+                    </div>
 
-                    <b>Inicio:</b>
-                    ${info.event.extendedProps.horaInicio}
-
-                    <br>
-
-                    <b>Fin:</b>
-                    ${info.event.extendedProps.horaFin}
-
-                    <br>
-
-                    <b>Motivo:</b>
-                    ${info.event.extendedProps.motivo || ""}
+                    <div class="tooltip-item">
+                        <b>Motivo:</b>
+                        ${info.event.extendedProps.motivo || "Sin motivo"}
+                    </div>
 
                     `;
+
+                    tooltip.style.opacity = "1";
 
                     const tooltipWidth =
                         tooltip.offsetWidth;
@@ -363,7 +383,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     let y =
                         e.clientY + 15;
 
-                    // 🔹 Evitar salir por derecha
                     if (
                         x + tooltipWidth >
                         window.innerWidth
@@ -375,7 +394,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             20;
                     }
 
-                    // 🔹 Evitar salir por abajo
                     if (
                         y + tooltipHeight >
                         window.innerHeight
@@ -394,6 +412,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         y + "px";
                 }
             );
+
+            info.el.addEventListener(
+                "mouseleave",
+                () => {
+
+                    tooltip.style.opacity =
+                        "0";
+                }
+            );
         },
 
         /* =========================
@@ -405,17 +432,19 @@ document.addEventListener("DOMContentLoaded", function () {
             const reservation =
                 info.event;
 
-            // 🔹 Usuario logueado
             const currentUserId =
                 localStorage.getItem("userId");
 
             const currentRole =
                 localStorage.getItem("userRole");
-            // 🔹 Dueño de la reserva
+
             const ownerId =
                 reservation.extendedProps.userId;
 
-            // 🔹 Bloquear si no es dueño
+            /* =========================
+               SI NO ES DUEÑO → SOLO VER
+            ========================= */
+
             if (
                 String(currentUserId) !==
                 String(ownerId)
@@ -424,51 +453,46 @@ document.addEventListener("DOMContentLoaded", function () {
             ) {
 
                 showToast(
-                    "warning",
-                    "Reserva bloqueada",
-                    "Solo el creador puede abrir o editar esta reserva"
+                    "info",
+                    reservation.extendedProps.room,
+
+                    `👤 ${reservation.extendedProps.userName}
+🕒 ${reservation.extendedProps.horaInicio} - ${reservation.extendedProps.horaFin}
+📝 ${reservation.extendedProps.motivo || "Sin motivo"}`
                 );
 
                 return;
             }
 
-            // 🔹 Permitir edición
+            /* =========================
+               EDITAR RESERVA
+            ========================= */
+
             editingReservationId =
                 reservation.id;
 
-            if (reservationModal) {
-
-                reservationModal
-                    .classList
-                    .add("active");
-            }
+            reservationModal
+                .classList
+                .add("active");
 
             const modalTitle =
                 document.querySelector(
                     ".modal-header h2"
                 );
 
-            if (modalTitle) {
-
-                modalTitle.innerText =
-                    "Editar Reserva";
-            }
+            modalTitle.innerText =
+                "Editar Reserva";
 
             const submitBtn =
                 document.querySelector(
                     ".submit-btn"
                 );
 
-            if (submitBtn) {
+            submitBtn.innerText =
+                "Actualizar Reserva";
 
-                submitBtn.innerText =
-                    "Actualizar Reserva";
-            }
-            if (deleteReservationBtn) {
-
-                deleteReservationBtn.style.display =
-                    "block";
-            }
+            deleteReservationBtn.style.display =
+                "block";
 
             document.getElementById("room").value =
                 reservation.extendedProps.room;
@@ -488,9 +512,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();
+
     /* =========================
-   FILTRO SALAS
-========================= */
+       FILTRO SALAS
+    ========================= */
 
     const roomFilter =
         document.getElementById(
@@ -507,10 +532,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     roomFilter.value;
 
                 calendar.refetchEvents();
-
             }
         );
     }
+
     /* =========================
        CAMBIO DE VISTA
     ========================= */
@@ -529,25 +554,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 calendar.changeView(
                     calendarView.value
                 );
-
             }
         );
     }
-
-
-    /* =========================
-       FORMULARIO
-    ========================= */
-
-    const reservationForm =
-        document.getElementById(
-            "reservationForm"
-        );
-
-    const deleteReservationBtn =
-        document.getElementById(
-            "deleteReservation"
-        );
 
     /* =========================
        ELIMINAR RESERVA
@@ -590,12 +599,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         .classList
                         .add("active");
 
-                    cancelDeleteBtn.onclick = () => {
+                    cancelDeleteBtn.onclick =
+                        () => {
 
-                        confirmModal
-                            .classList
-                            .remove("active");
-                    };
+                            confirmModal
+                                .classList
+                                .remove("active");
+                        };
 
                     confirmDeleteBtn.onclick =
                         async () => {
@@ -603,6 +613,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             confirmModal
                                 .classList
                                 .remove("active");
+
                             try {
 
                                 const response =
@@ -623,12 +634,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                         "Reserva eliminada"
                                     );
 
-                                    if (reservationModal) {
-
-                                        reservationModal
-                                            .classList
-                                            .remove("active");
-                                    }
+                                    reservationModal
+                                        .classList
+                                        .remove("active");
 
                                     reservationForm.reset();
 
@@ -656,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     "Error interno"
                                 );
                             }
-                        }
+                        };
                 }
             );
     }
@@ -706,6 +714,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             method: method,
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
                             },
@@ -724,12 +733,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 : "Reserva creada"
                         );
 
-                        if (reservationModal) {
-
-                            reservationModal
-                                .classList
-                                .remove("active");
-                        }
+                        reservationModal
+                            .classList
+                            .remove("active");
 
                         reservationForm.reset();
 
@@ -737,7 +743,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             null;
 
                         calendar.refetchEvents();
-
 
                     } else {
 
@@ -764,9 +769,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     }
+
     /* =========================
-   CERRAR MODAL AFUERA
-========================= */
+       CERRAR MODAL AFUERA
+    ========================= */
 
     window.addEventListener(
         "click",
@@ -783,5 +789,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     );
-
 });
