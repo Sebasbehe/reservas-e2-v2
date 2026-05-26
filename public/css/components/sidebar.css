@@ -308,3 +308,30 @@
 
     transform: translateY(-2px);
 }
+/* =========================
+   LOGO SIDEBAR
+========================= */
+
+.sidebar-logo {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.sidebar-logo-img {
+
+    width: 120px;
+
+    height: auto;
+
+    object-fit: contain;
+
+    filter: drop-shadow(0 6px 18px rgba(194,213,0,.25));
+}

@@ -87,6 +87,25 @@ document.getElementById(
 ).innerText =
     userName;
 document.getElementById(
+    "settingsUserName"
+).innerText =
+    userName;
+
+document.getElementById(
+    "sidebarUserRole"
+).innerText =
+    userRole;
+
+document.getElementById(
+    "topbarUserRole"
+).innerText =
+    userRole;
+
+document.getElementById(
+    "settingsUserRole"
+).innerText =
+    userRole;
+document.getElementById(
     "sidebarUserRole"
 ).innerText =
     userRole === "admin"
