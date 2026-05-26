@@ -11,6 +11,7 @@ const registerForm = document.getElementById("registerForm");
 // CAMBIO TABS
 
 loginTab.addEventListener("click", () => {
+  clearForms();
 
   loginTab.classList.add("active");
 
@@ -75,6 +76,7 @@ loginForm.addEventListener("submit", async (e) => {
         "userRole",
         result.role
       );
+      loginForm.reset();
 
       window.location.href =
         "/pages/index.html";
@@ -100,6 +102,12 @@ registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(registerForm);
+  function clearForms() {
+
+  loginForm.reset();
+
+  registerForm.reset();
+}
 
   const data = Object.fromEntries(formData);
 
@@ -117,6 +125,7 @@ registerForm.addEventListener("submit", async (e) => {
     });
 
     if (response.ok) {
+      registerForm.reset();
 
       alert("Usuario registrado correctamente");
 
