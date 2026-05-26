@@ -35,7 +35,8 @@
 const userName =
     localStorage.getItem(
         "userName"
-    ) || "Usuario Demo";
+    );
+
 const userRole =
     localStorage.getItem(
         "userRole"
