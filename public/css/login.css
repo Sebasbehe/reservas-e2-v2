@@ -16,7 +16,8 @@ body{
 
     min-height:100vh;
 
-    overflow:hidden;
+    overflow-x:hidden;
+    overflow-y:auto;
 
     background:
         radial-gradient(circle at top left,
