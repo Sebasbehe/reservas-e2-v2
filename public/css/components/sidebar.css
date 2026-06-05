@@ -335,23 +335,3 @@
 
     filter: drop-shadow(0 6px 18px rgba(194,213,0,.25));
 }
-/* =========================
-   SIDEBAR COLAPSABLE
-========================= */
-
-.sidebar{
-
-    transition: all .3s ease;
-}
-
-.sidebar.collapsed span,
-.sidebar.collapsed .sidebar-user-info,
-.sidebar.collapsed .sidebar-logo{
-
-    display:none;
-}
-
-.main-content{
-
-    transition: all .3s ease;
-}
